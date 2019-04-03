@@ -3,6 +3,13 @@ $conn = mysqli_connect('127.0.0.1', 'root', '1234') or
 	die(mysqli_connect_error());
 mysqli_select_db($conn, 'quizzular') or
 	die(mysqli_error($conn));
+	$quiz_id = $_GET['quiz_id'];
+
+	$sql = "SELECT quiz_name FROM quizzes where id= $quiz_id";
+	$result = mysqli_query($conn, $sql);
+	while ($row = mysqli_fetch_assoc($result)) {
+		$quiz_name = $row['quiz_name'];
+	}
 ?>
 
 <!doctype html>
@@ -32,17 +39,36 @@ mysqli_select_db($conn, 'quizzular') or
     <!-- Nav wrapper end -->
   </div>
   <!-- Nav end -->
-  <h1>Quiz List</h1>
-	<br>
+
 	<?php
-	$sql = "SELECT id, quiz_name FROM quizzes";
+ 	echo "<div style='margin-left:50px;'>";
+	echo "<h1>" . $quiz_name . "</h1>";
+
+
+	$sql = "SELECT quiz_id, question_text FROM questions where quiz_id='$quiz_id'";
+
 	$result = mysqli_query($conn, $sql);
+	$count = 1;
 	while ($row = mysqli_fetch_assoc($result)) {
-						echo "<a href='do_quiz.php?quiz_id=" . $row['id'] .  "'style='width:300px; position:absolute; left:50%; transform: translateX(-50%);
-					' class='btn btn-success'>" . $row['quiz_name'] . "</a>";
-					echo "<br>";
-					echo "<br>";
+
+		echo "Question: " . $row["question_text"];
+		$sql1 = "SELECT * FROM answers where questions_id = $count";
+		$result1 = mysqli_query($conn, $sql1);
+		while ($row1 = mysqli_fetch_assoc($result1)) {
+				echo "<br>";
+				echo "<input type='radio' name='" . $row1["questions_id"] . "'>" . " " . $row1["answer_text"];
+
+		}
+		$count++;
+
+	  echo "<br>";
+		echo "<br>";
 	}
+	echo "<script>function goBack() { location.href = 'quiz_list.php' } </script>";
+  echo "<button type='button' class='btn btn-success' onclick='goBack()'>Submit Quiz</button>";
+	echo "</div>";
+
  ?>
 </body>
+
 </html>

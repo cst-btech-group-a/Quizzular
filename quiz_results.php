@@ -41,7 +41,7 @@ mysqli_select_db($conn, 'quizzular') or
 	while ($row = mysqli_fetch_assoc($result)) {
 	    foreach ($row as $field => $value) {
 					echo "<button type='button' style='width:300px; position:absolute; left:50%; transform: translateX(-50%);
-					' class='btn btn-success' onclick='addQuestion()'>$value</button>";
+					' class='btn btn-success'>$value</button>";
 					echo "<br>";
 					echo "<br>";
 	    }

@@ -1,3 +1,5 @@
+var count = 0;
+
 function addQuestion() {
   count++;
   var div = document.createElement("div");
@@ -21,7 +23,7 @@ function addAnswers(id)
 
   if (answerType == "Multiple Choice")
   {
-    div.innerHTML = "<br><input type='text' name='ans1' placeholder='Answer 1'><br><input type='text' name='ans2' placeholder='Answer 2'><br><input type='text' name='ans3' placeholder='Answer 3'><br><input type='text' name='ans4' placeholder='Answer 4'><br>";
+    div.innerHTML = "<br><input type='text' name='ans" + count + "1' placeholder='Answer 1'><br><input type='text' name='ans" + count + "2' placeholder='Answer 2'><br><input type='text' name='ans" + count + "3' placeholder='Answer 3'><br><input type='text' name='ans" + count + "4' placeholder='Answer 4'><br>";
   }
 
   if (answerType == "True or False")
@@ -40,7 +42,7 @@ function removeForm(h) {
   elem.parentNode.removeChild(h);
 }
 
-function submitQuiz()
+function submitQuiz1()
 {
   location.href = 'quiz_list.php'
 }
