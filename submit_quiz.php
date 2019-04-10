@@ -22,6 +22,12 @@ if(isset($_POST)){
 
 		$quiz_id = mysqli_insert_id($conn);
 
+		$sql = "SELECT id FROM quizzes WHERE quiz_name = '$quiz_name'";
+		$result = mysqli_query($conn, $sql);
+		$row = mysqli_fetch_assoc($result);
+		$quiz_id = $row['id'];
+		//echo $quiz_id;
+
 		for ($i = 1; $i <= $count+1; $i++)
 		{
 			$question = $data[$i][0];
@@ -35,30 +41,32 @@ if(isset($_POST)){
 			INSERT INTO questions (quiz_id, question_text) VALUES($quiz_id, '$question')
 			")or die(mysqli_error($conn));
 
+			$qid = mysqli_insert_id($conn);
+
 
 			if ($choice1 == $answer)
 			{
 				mysqli_query($conn, "
-				INSERT INTO answers (questions_id,answer_text,score) VALUES($i, '$choice1', 100)
+				INSERT INTO answers (questions_id,answer_text,score) VALUES($qid, '$choice1', 100)
 				")or die(mysqli_error($conn));
 			}
 			else
 			{
 				mysqli_query($conn, "
-				INSERT INTO answers (questions_id,answer_text,score) VALUES($i, '$choice1', 0)
+				INSERT INTO answers (questions_id,answer_text,score) VALUES($qid, '$choice1', 0)
 				")or die(mysqli_error($conn));
 			}
 
 			if ($choice2 == $answer)
 			{
 				mysqli_query($conn, "
-				INSERT INTO answers (questions_id,answer_text,score) VALUES($i, '$choice2', 100)
+				INSERT INTO answers (questions_id,answer_text,score) VALUES($qid, '$choice2', 100)
 				")or die(mysqli_error($conn));
 			}
 			else
 			{
 				mysqli_query($conn, "
-				INSERT INTO answers (questions_id,answer_text,score) VALUES($i, '$choice2', 0)
+				INSERT INTO answers (questions_id,answer_text,score) VALUES($qid, '$choice2', 0)
 				")or die(mysqli_error($conn));
 			}
 
@@ -67,13 +75,13 @@ if(isset($_POST)){
 				if ($choice3 == $answer)
 				{
 					mysqli_query($conn, "
-					INSERT INTO answers (questions_id,answer_text,score) VALUES($i, '$choice3', 100)
+					INSERT INTO answers (questions_id,answer_text,score) VALUES($qid, '$choice3', 100)
 					")or die(mysqli_error($conn));
 				}
 				else
 				{
 					mysqli_query($conn, "
-					INSERT INTO answers (questions_id,answer_text,score) VALUES($i, '$choice3', 0)
+					INSERT INTO answers (questions_id,answer_text,score) VALUES($qid, '$choice3', 0)
 					")or die(mysqli_error($conn));
 				}
 			}
@@ -83,13 +91,13 @@ if(isset($_POST)){
 				if ($choice4 == $answer)
 				{
 					mysqli_query($conn, "
-					INSERT INTO answers (questions_id,answer_text,score) VALUES($i, '$choice4', 100)
+					INSERT INTO answers (questions_id,answer_text,score) VALUES($qid, '$choice4', 100)
 					")or die(mysqli_error($conn));
 				}
 				else
 				{
 					mysqli_query($conn, "
-					INSERT INTO answers (questions_id,answer_text,score) VALUES($i, '$choice4', 0)
+					INSERT INTO answers (questions_id,answer_text,score) VALUES($qid, '$choice4', 0)
 					")or die(mysqli_error($conn));
 				}
 			}

@@ -108,8 +108,8 @@ for (var i = 0; i <= count; i++)
   $.post('submit_quiz.php', {
     data: {data, counts:count}
   }, function(response) {
-    console.log(response);
-	  //location.href = 'quiz_list.php';
+     console.log(response);
+	   location.href = 'quiz_list.php';
   });
 }
 
